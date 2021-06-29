@@ -1,18 +1,18 @@
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    justify-content: flex-start;
-    background: linear-gradient(0deg, rgba(243, 3, 3) 50%, rgba(45, 4, 231) 50%);
-}
-/*         
-.reset-button {
+        * {
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: flex-start;
+            background: linear-gradient(0deg, rgba(243, 3, 3) 50%, rgba(45, 4, 231) 50%);
+        }
+        /*         
+.startButton {
     font-size: 16px;
     height: 30px;
     line-height: 8px;

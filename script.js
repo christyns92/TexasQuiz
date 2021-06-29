@@ -1,7 +1,5 @@
 console.log('TexasQuiz');
 
-// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-
 // global
 var startButtonHtml = document.querySelector("#startButton");
 var quizContainerHtml = document.querySelector("#quizContainer");
@@ -22,7 +20,7 @@ var questionNickname = {
     question: 'What nickname is Texas popularly known by?',
     answer1: 'The Bluebonnet State',
     answer2: 'The Alamo State',
-    answer3: 'The Lone Star State', //correct answer that is our fourHTML
+    answer3: 'The Lone Star State', //correct answer 
     answer4: 'The Howdy State'
 };
 
@@ -56,7 +54,7 @@ var answers = [];
 
 
 // WHEN I click the start button
-// need a button 
+// create button 
 // need a click event listener that does something when button is clicked
 startButtonHtml.addEventListener("click", function() {
 
@@ -82,11 +80,10 @@ console.log(finalScore + "score before user choice")
 answersHtml.addEventListener("click", function(event) { //listens to 
     var targetHtmlElement = event.target;
 
-    // Checks if element is a button
+    // Checks if the element is a button
     // if (targetHtmlElement.matches("button") === true) {
     //     console.log(targetHtmlElement + ' answer button was clicked')
-    // if person clicks questionNickname.answer4 add a plus one to a var called right answer 
-    // if they click the button that matches the right answer, show "You chose the correct answer!"
+    // if users clicks the button that matches the right answer, show "You chose the correct answer!"
 
     if (((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionNickname.answer3)) || ((targetHtmlElement.matches('#twoHtml')) && (twoHtml.innerHTML == questionFlower.answer2)) || ((targetHtmlElement.matches('#oneHtml')) && (oneHtml.innerHTML == questionCountry.answer1)) ||
         ((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionFlags.answer3))) {
@@ -119,13 +116,11 @@ answersHtml.addEventListener("click", function(event) { //listens to
     fourHtml.innerHTML = questions[i].answer4;
 
 });
-// use appendList or appendChild div that shows the score
 
 
 // THEN a timer starts a countdown from a specified time (60sec) and I am presented with a question
 // timer function to start on that click event listener
-// and show a question from our array of question/answer objects 
-// Timer that counts down from 5
+
 function countdown() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
     var timeInterval = setInterval(function() {
