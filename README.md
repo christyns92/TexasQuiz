@@ -6,10 +6,10 @@ The purpose of the assignment was to generate a quiz that presents the user with
 
 ## How To Use:
 
-Step 1. Press the start button and the first question will display and the timer will begin.
-Step 2. Choose your answer for each question. If your answer is incorrect, a message will be displayed and your time will be reduced by ten seconds.
-Step 3. When you have gone through each question, the timer will stop and your score will be displayed.
-Step 4. Enter your initials and press the "Enter" button. Your final score will be displayed on the scoreboard, as well as, in local storage.
+Step 1. Press the start button and the first question will display and the timer will begin. <br>
+Step 2. Choose your answer for each question. If your answer is incorrect, a message will be displayed and your time will be reduced by ten seconds. <br>
+Step 3. When you have gone through each question, the timer will stop and your score will be displayed. <br>
+Step 4. Enter your initials and press the "Enter" button. Your final score will be displayed on the scoreboard, as well as, in local storage. <br>
 
 ## Demonstration
 
