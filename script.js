@@ -1,5 +1,7 @@
 console.log('TexasQuiz');
 
+// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
+
 // global
 var startButtonHtml = document.querySelector("#startButton");
 var quizContainerHtml = document.querySelector("#quizContainer");
@@ -10,17 +12,39 @@ var twoHtml = document.querySelector("#twoHtml");
 var threeHtml = document.querySelector("#threeHtml");
 var fourHtml = document.querySelector("#fourHtml");
 var counterHtml = document.querySelector("#counterHtml");
+var scoreKeeperHtml = document.querySelector("#scoreKeeper");
+var finalScoreHtml = document.querySelector("#finalScore");
+var keeperButtonHtml = document.querySelector("#keeperButton");
+var initialsHtml = document.querySelector("#initials");
+var scoreboardHtml = document.querySelector("#scoreboard");
 
 var finalScore = 100;
 var timeLeft = 60;
 var i = 0;
+
+var scoreKeeperArray = [];
+
+function getLocal(scoreKeeperArray) {
+    if (localStorage.getItem("ending score") === null) {
+        return scoreKeeperArray;
+    } else {
+        return JSON.parse(localStorage.getItem("ending score"));
+    }
+
+}
+
+function sort(scoreKeeperArray) {
+    scoreKeeperArray = scoreKeeperArray.sort(function(a, b) { return a.score - b.score });
+    scoreKeeperArray = scoreKeeperArray.reverse();
+    return scoreKeeperArray;
+}
 
 
 var questionNickname = {
     question: 'What nickname is Texas popularly known by?',
     answer1: 'The Bluebonnet State',
     answer2: 'The Alamo State',
-    answer3: 'The Lone Star State', //correct answer 
+    answer3: 'The Lone Star State', //correct answer that is our fourHTML
     answer4: 'The Howdy State'
 };
 
@@ -54,7 +78,7 @@ var answers = [];
 
 
 // WHEN I click the start button
-// create button 
+// need a button 
 // need a click event listener that does something when button is clicked
 startButtonHtml.addEventListener("click", function() {
 
@@ -80,10 +104,11 @@ console.log(finalScore + "score before user choice")
 answersHtml.addEventListener("click", function(event) { //listens to 
     var targetHtmlElement = event.target;
 
-    // Checks if the element is a button
+    // Checks if element is a button
     // if (targetHtmlElement.matches("button") === true) {
     //     console.log(targetHtmlElement + ' answer button was clicked')
-    // if users clicks the button that matches the right answer, show "You chose the correct answer!"
+    // if person clicks questionNickname.answer4 add a plus one to a var called right answer 
+    // if they click the button that matches the right answer, show "You chose the correct answer!"
 
     if (((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionNickname.answer3)) || ((targetHtmlElement.matches('#twoHtml')) && (twoHtml.innerHTML == questionFlower.answer2)) || ((targetHtmlElement.matches('#oneHtml')) && (oneHtml.innerHTML == questionCountry.answer1)) ||
         ((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionFlags.answer3))) {
@@ -103,12 +128,48 @@ answersHtml.addEventListener("click", function(event) { //listens to
         document.getElementById('quizContainer').appendChild(correctAnswer);
         // take 10 points away from user and keep track of that in our finalScore variable
         timeLeft = (timeLeft - 10);
+        finalScore = (finalScore - 10);
         console.log(timeLeft + "score after user gets it wrong")
         setTimeout(function() {
             correctAnswer.textContent = '';
         }, 2000);
     }
-    i++
+    i++;
+
+    if (questions.length == i) {
+        finalScoreHtml.innerHTML = "Congrats! You have completed the quiz. Here is your final score " + finalScore;
+        clearInterval(timeInterval);
+
+        keeperButtonHtml.addEventListener("click", function() {
+            console.log("test");
+            scoreKeeperArray = getLocal(scoreKeeperArray);
+            var scoreKeeper = {
+                initials: initialsHtml.value,
+                score: finalScore
+            }
+            scoreKeeperArray.push(scoreKeeper);
+            scoreKeeperArray = sort(scoreKeeperArray);
+
+            for (var i = 0; i < scoreKeeperArray.length; i++) {
+                var c = scoreKeeperArray[i];
+
+                var scoreLi = document.createElement("li");
+                scoreLi.textContent = "scoreboard: " + c.score + " name: " + c.initials;
+                scoreboardHtml.appendChild(scoreLi);
+
+            }
+
+            localStorage.setItem("ending score", JSON.stringify(scoreKeeperArray));
+        })
+
+
+
+    }
+
+
+
+
+
     questionHtml.innerHTML = questions[i].question;
     oneHtml.innerHTML = questions[i].answer1;
     twoHtml.innerHTML = questions[i].answer2;
@@ -116,14 +177,19 @@ answersHtml.addEventListener("click", function(event) { //listens to
     fourHtml.innerHTML = questions[i].answer4;
 
 });
+// use appendList or appendChild div that shows the score
 
 
 // THEN a timer starts a countdown from a specified time (60sec) and I am presented with a question
 // timer function to start on that click event listener
+// and show a question from our array of question/answer objects 
+// Timer that counts down from 5
+
+var timeInterval = "";
 
 function countdown() {
     // Use the `setInterval()` method to call a function to be executed every 1000 milliseconds
-    var timeInterval = setInterval(function() {
+    timeInterval = setInterval(function() {
         // As long as the `timeLeft` is greater than 1
         if (timeLeft > 1) {
             // Set the `textContent` of `timerEl` to show the remaining seconds
@@ -143,15 +209,3 @@ function countdown() {
         }
     }, 1000);
 }
-
-
-
-// WHEN i answer a question incorrectly time is subtracted from the clock
-// user incorrect and correct answer is stored to present user at end of quiz
-
-// WHEN all questions are answered or the timer reaches 0
-// if user answers all questions BEFORE time runs out, stop time and store that time to show user at end
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and my score
-// show user score / grade / time left on clock / initials / button that says wanna play again?
