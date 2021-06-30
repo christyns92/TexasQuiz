@@ -1,7 +1,5 @@
 console.log('TexasQuiz');
 
-// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-
 // global
 var startButtonHtml = document.querySelector("#startButton");
 var quizContainerHtml = document.querySelector("#quizContainer");
@@ -18,12 +16,14 @@ var keeperButtonHtml = document.querySelector("#keeperButton");
 var initialsHtml = document.querySelector("#initials");
 var scoreboardHtml = document.querySelector("#scoreboard");
 
+// setting variables fir score and timer
 var finalScore = 100;
 var timeLeft = 60;
 var i = 0;
 
 var scoreKeeperArray = [];
 
+// getting local variables from scorekeeperarray
 function getLocal(scoreKeeperArray) {
     if (localStorage.getItem("ending score") === null) {
         return scoreKeeperArray;
@@ -33,18 +33,19 @@ function getLocal(scoreKeeperArray) {
 
 }
 
+// sorting, reversing, and returning scorekeeperarray
 function sort(scoreKeeperArray) {
     scoreKeeperArray = scoreKeeperArray.sort(function(a, b) { return a.score - b.score });
     scoreKeeperArray = scoreKeeperArray.reverse();
     return scoreKeeperArray;
 }
 
-
+// definining questions as variables and listing answers
 var questionNickname = {
     question: 'What nickname is Texas popularly known by?',
     answer1: 'The Bluebonnet State',
     answer2: 'The Alamo State',
-    answer3: 'The Lone Star State', //correct answer that is our fourHTML
+    answer3: 'The Lone Star State', //correct answer 
     answer4: 'The Howdy State'
 };
 
@@ -72,14 +73,11 @@ var questionFlags = {
     answer4: 2
 };
 
+// creating question variable array
 var questions = [questionNickname, questionFlower, questionCountry, questionFlags];
 var answers = [];
 
-
-
-// WHEN I click the start button
-// need a button 
-// need a click event listener that does something when button is clicked
+// creating click event listener that does something when button is clicked
 startButtonHtml.addEventListener("click", function() {
 
     questionHtml.innerHTML = questionNickname.question
@@ -88,28 +86,18 @@ startButtonHtml.addEventListener("click", function() {
     threeHtml.innerHTML = questionNickname.answer3;
     fourHtml.innerHTML = questionNickname.answer4;
 
-
     countdown();
 
 });
 
-// WHEN I answer a question
-// user has a list of options that are buttons to choose from and one is "correct" rest are "incorrect"
-// THEN I am presented with another question
-// after user clicks, a pop up shows them if it's correct or incorrect
-// also after user click, a new question with new option buttons to choose from comes up
-// also I keep track of correct/incorrect score to present at user at the end of the quiz
+//console logging final score 
 console.log(finalScore + "score before user choice")
 
 answersHtml.addEventListener("click", function(event) { //listens to 
     var targetHtmlElement = event.target;
 
-    // Checks if element is a button
-    // if (targetHtmlElement.matches("button") === true) {
-    //     console.log(targetHtmlElement + ' answer button was clicked')
-    // if person clicks questionNickname.answer4 add a plus one to a var called right answer 
-    // if they click the button that matches the right answer, show "You chose the correct answer!"
 
+    //identifying if user answer is correct and displaying message
     if (((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionNickname.answer3)) || ((targetHtmlElement.matches('#twoHtml')) && (twoHtml.innerHTML == questionFlower.answer2)) || ((targetHtmlElement.matches('#oneHtml')) && (oneHtml.innerHTML == questionCountry.answer1)) ||
         ((targetHtmlElement.matches('#threeHtml')) && (threeHtml.innerHTML == questionFlags.answer3))) {
         console.log('Your answer is correct!');
@@ -121,6 +109,7 @@ answersHtml.addEventListener("click", function(event) { //listens to
             correctAnswer.textContent = '';
         }, 2000);
 
+        //identifying if user answer is incorrect, decrementing score and displaying message
     } else {
         console.log('Im sorry, your answer is Incorrect')
         var correctAnswer = document.createElement("div");
@@ -136,10 +125,12 @@ answersHtml.addEventListener("click", function(event) { //listens to
     }
     i++;
 
+    // if all questions have been answered, display completed message
     if (questions.length == i) {
         finalScoreHtml.innerHTML = "Congrats! You have completed the quiz. Here is your final score " + finalScore;
         clearInterval(timeInterval);
 
+        // creating button to obtain initials and display final score
         keeperButtonHtml.addEventListener("click", function() {
             console.log("test");
             scoreKeeperArray = getLocal(scoreKeeperArray);
@@ -161,14 +152,7 @@ answersHtml.addEventListener("click", function(event) { //listens to
 
             localStorage.setItem("ending score", JSON.stringify(scoreKeeperArray));
         })
-
-
-
     }
-
-
-
-
 
     questionHtml.innerHTML = questions[i].question;
     oneHtml.innerHTML = questions[i].answer1;
@@ -177,14 +161,8 @@ answersHtml.addEventListener("click", function(event) { //listens to
     fourHtml.innerHTML = questions[i].answer4;
 
 });
-// use appendList or appendChild div that shows the score
 
-
-// THEN a timer starts a countdown from a specified time (60sec) and I am presented with a question
-// timer function to start on that click event listener
-// and show a question from our array of question/answer objects 
-// Timer that counts down from 5
-
+// creates timer and displays how long user has left
 var timeInterval = "";
 
 function countdown() {

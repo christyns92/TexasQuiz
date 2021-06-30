@@ -11,6 +11,16 @@ body {
     justify-content: flex-start;
     background: linear-gradient(0deg, rgba(243, 3, 3) 50%, rgba(45, 4, 231) 50%);
 }
+
+header {
+    color: antiquewhite;
+}
+
+section {
+    color: antiquewhite;
+}
+
+
 /*         
 .reset-button {
     font-size: 16px;
